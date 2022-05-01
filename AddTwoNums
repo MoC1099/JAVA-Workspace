@@ -1,0 +1,101 @@
+package LeetCode;
+
+import java.util.LinkedList;
+
+// You are given two non-empty linked lists representing two non-negative integers. 
+
+//The digits are stored in reverse order, and each of their nodes contains a single digit. \
+//Add the two numbers and return the sum as a linked list.
+
+//You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+public class AddTwoNums {
+
+	public static void main(String[] args) {
+		ListNode l1 = new ListNode();
+		ListNode l2 = new ListNode();
+		l1.add(2);
+		l1.add(4);
+		l1.add(3);
+		
+		l2.add(5);
+		l2.add(6);
+		l2.add(4);
+		
+		System.out.println(l1.val);
+		System.out.println(ListNode.addTwoNumbers(l1, l2));
+	}
+
+	public static class ListNode {
+		int val;
+		ListNode next;
+
+		ListNode() {
+		}
+
+		public void add(int i) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public ListNode(int val) {
+			this.val = val;
+		}
+
+		ListNode(int val, ListNode next) {
+			this.val = val;
+			this.next = next;
+		}
+
+		public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+			// creating new listNode for our answer
+			ListNode dummy_head = new ListNode();
+			ListNode l3 = dummy_head;
+			
+			int carry = 0;
+			while(l1 != null || l2!= null) { 
+				
+				// value ints to see if l1 isnt equal null then forward the l1 (value) else forward 0;
+				int val_l1 = (l1 != null) ? l1.val : 0;
+				int val_l2 = (l2 != null) ? l2.val : 0;
+				
+				
+				int total_sum = val_l1 + val_l2 + carry; 
+				
+				carry = total_sum/10;  //  6+6 = 12----- 12/10 = 1.2, in integer form it is just 1. So carry is = 1
+				
+				// now if carry =1 what do we put down there.
+				
+				int final_val = total_sum % 10; //  6+6 = 12----- 12%10 = 2, so we put 2 in final_val
+				
+				// now we have to put the final_val into our new node
+				
+				ListNode new_node = new ListNode(final_val);
+				l3.next = new_node;
+				
+				// this is just doing one column we have to keep moving to the next values.
+					
+				if (l1!=null) l1 = l1.next;
+				if(l2!= null) l2 = l2.next;
+				
+				l3 = l3.next;
+								
+			}
+			
+			// now lets say if the first 2 digits in the columns were 9 + 9 = 18. we need a new node to store that carry
+			
+			if(carry> 0) {
+				ListNode new_node = new ListNode(carry);
+				// the last l3.next will be the last carry if exists.
+				l3.next = new_node;
+				//after that l3.next should be null
+				l3 = l3.next;
+				
+				
+			}
+			return dummy_head.next;
+
+		}
+
+	}
+	
+}
